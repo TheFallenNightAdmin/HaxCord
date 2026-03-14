@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "updatedAt": "2026-03-12",
+  "plugins": [
+    {
+      "id": "custom-css",
+      "name": "CustomCSS",
+      "description": "Live CSS editor built into Discord. Open with Ctrl+Shift+K and see changes in real time.",
+      "author": "TheFallenNightAdmin",
+      "version": "1.0.0",
+      "tags": [
+        "utility",
+        "theming",
+        "builtin"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/haxcord/main/plugins/builtin/CustomCSS.js",
+      "thumbnail": null,
+      "readme": "https://raw.githubusercontent.com/TheFallenNightAdmin/haxcord/main/plugins/builtin/CustomCSS.js"
+    },
+    {
+      "id": "no-typing-indicators",
+      "name": "NoTypingIndicators",
+      "description": "Hides the 'X is typing...' indicator in all channels.",
+      "author": "TheFallenNightAdmin",
+      "version": "1.0.0",
+      "tags": [
+        "utility",
+        "privacy",
+        "builtin"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/haxcord/main/plugins/builtin/NoTypingIndicators.js",
+      "thumbnail": null,
+      "readme": null
+    },
+    {
+      "id": "always-on-top",
+      "name": "AlwaysOnTop",
+      "description": "Keeps Discord window above all other windows.",
+      "author": "TheFallenNightAdmin",
+      "version": "1.0.0",
+      "tags": [
+        "utility",
+        "window",
+        "builtin"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/haxcord/main/plugins/builtin/AlwaysOnTop.js",
+      "thumbnail": null,
+      "readme": null
+    },
+    {
+      "id": "show-timezones",
+      "name": "ShowTimezones",
+      "description": "Shows a user's local time in their profile popout. Add [tz:Region/City] to your bio.",
+      "author": "TheFallenNightAdmin",
+      "version": "1.0.0",
+      "tags": [
+        "utility",
+        "profiles",
+        "builtin"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/haxcord/main/plugins/builtin/ShowTimezones.js",
+      "thumbnail": null,
+      "readme": null
+    },
+    {
+      "id": "music-menu",
+      "name": "MusicMenu",
+      "description": "A floating music player inside Discord. Search and play YouTube and SoundCloud tracks directly.",
+      "author": "pagoni meow",
+      "version": "1.1.0",
+      "tags": [
+        "utility",
+        "music",
+        "media"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/HaxCord/main/plugins/MusicMenu_plugin.js",
+      "thumbnail": null,
+      "readme": null
+    },
+    {
+      "id": "menu-duo",
+      "name": "MenuDuo",
+      "description": "Music player (Alt+M) and theme switcher (Esc) combined in one plugin.",
+      "author": "pagoni meow",
+      "version": "1.0.4",
+      "tags": [
+        "utility",
+        "music",
+        "theming"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/HaxCord/main/plugins/MenuDuo_plugin.js",
+      "thumbnail": null,
+      "readme": null
+    },
+    {
+      "id": "local-theme-switcher",
+      "name": "LocalThemeSwitcher",
+      "description": "Randomly applies one of your installed themes on startup. Press Escape to open the switcher.",
+      "author": "Pagoni Hax",
+      "version": "1.0.3",
+      "tags": [
+        "theming",
+        "utility"
+      ],
+      "stars": 0,
+      "source": "https://raw.githubusercontent.com/TheFallenNightAdmin/HaxCord/main/plugins/LocalThemeSwapper_plugin.js",
+      "thumbnail": null,
+      "readme": null
+    }
+  ]
+}
