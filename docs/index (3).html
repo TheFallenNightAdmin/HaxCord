@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HaxCord — Discord, Unchained</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #ff003c;
+      --red-dim: rgba(255,0,60,0.15);
+      --red-glow: rgba(255,0,60,0.5);
+      --blue: #72eaf8;
+      --blue-dim: rgba(114,234,248,0.08);
+      --bg: #050307;
+      --bg2: #0d0008;
+      --text: rgb(255,160,170);
+      --text-dim: rgba(255,160,170,0.5);
+      --mono: 'Share Tech Mono', monospace;
+      --display: 'Orbitron', sans-serif;
+      --body: 'Rajdhani', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ── CRT scanlines overlay ── */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 100; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0px,
+        rgba(0,0,0,0.07) 1px,
+        rgba(0,0,0,0) 2px
+      );
+      animation: scan 12s linear infinite;
+    }
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 99; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,0,60,0.03) 0%, transparent 70%),
+        linear-gradient(90deg, rgba(255,0,60,0.04), rgba(0,255,255,0.02), rgba(0,0,255,0.04));
+      background-size: auto, 3px 100%;
+    }
+    @keyframes scan { 0% { background-position: 0 0; } 100% { background-position: 0 9999px; } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      border-bottom: 1px solid rgba(255,0,60,0.15);
+      background: rgba(5,3,7,0.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 18px; font-weight: 900;
+      color: var(--red);
+      text-shadow: 0 0 12px var(--red-glow), 0 0 30px rgba(255,0,60,0.2);
+      letter-spacing: 0.1em;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 13px;
+      color: var(--text-dim); text-decoration: none;
+      letter-spacing: 0.05em; transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--red);
+      text-shadow: 0 0 8px var(--red-glow);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative; text-align: center;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,0,60,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,0,60,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 80%);
+    }
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--blue); letter-spacing: 0.2em; text-transform: uppercase;
+      margin-bottom: 20px; position: relative; z-index: 1;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-eyebrow::before { content: "> "; color: var(--red); }
+    h1 {
+      font-family: var(--display); font-size: clamp(52px, 10vw, 100px);
+      font-weight: 900; line-height: 0.95;
+      color: #fff;
+      text-shadow:
+        0 0 20px var(--red-glow),
+        0 0 60px rgba(255,0,60,0.2),
+        0 0 120px rgba(255,0,60,0.08);
+      letter-spacing: -0.02em; position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 span { color: var(--red); }
+    .hero-sub {
+      font-family: var(--body); font-size: 18px; font-weight: 400;
+      color: var(--text-dim); max-width: 500px; margin: 24px auto 0;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-buttons {
+      display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em;
+      padding: 14px 28px; border-radius: 4px; text-decoration: none;
+      cursor: pointer; border: none; transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--red); color: #fff;
+      box-shadow: 0 0 20px rgba(255,0,60,0.4), 0 0 60px rgba(255,0,60,0.1);
+    }
+    .btn-primary:hover {
+      background: #ff1a50;
+      box-shadow: 0 0 30px rgba(255,0,60,0.7), 0 0 80px rgba(255,0,60,0.2);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(255,0,60,0.4);
+    }
+    .btn-secondary:hover {
+      border-color: var(--red); color: var(--red);
+      box-shadow: 0 0 16px rgba(255,0,60,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* terminal blink cursor */
+    .cursor-blink {
+      display: inline-block; width: 10px; height: 1em;
+      background: var(--red); vertical-align: middle; margin-left: 4px;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid rgba(255,0,60,0.12);
+      border-bottom: 1px solid rgba(255,0,60,0.12);
+      background: rgba(255,0,60,0.03);
+      padding: 20px 40px;
+      display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: var(--display); font-size: 28px; font-weight: 700;
+      color: var(--red);
+      text-shadow: 0 0 10px var(--red-glow);
+    }
+    .stat-label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+
+    .section-tag {
+      font-family: var(--mono); font-size: 11px; color: var(--blue);
+      letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-tag::before { content: "// "; color: var(--red); }
+    h2 {
+      font-family: var(--display); font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700; color: #fff; margin-bottom: 16px;
+      text-shadow: 0 0 20px rgba(255,0,60,0.15);
+    }
+    .section-desc { color: var(--text-dim); font-size: 16px; max-width: 520px; margin-bottom: 56px; }
+
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
+    }
+    .feature-card {
+      background: linear-gradient(135deg, rgba(255,0,60,0.04), rgba(0,0,0,0.6));
+      border: 1px solid rgba(255,0,60,0.15);
+      border-radius: 8px; padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--red), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(255,0,60,0.5);
+      box-shadow: 0 0 30px rgba(255,0,60,0.1), inset 0 0 30px rgba(255,0,60,0.03);
+      transform: translateY(-3px);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon { font-size: 28px; margin-bottom: 16px; }
+    .feature-title { font-family: var(--display); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: 0.05em; }
+    .feature-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ── PLUGIN LIST ── */
+    .plugin-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;
+    }
+    .plugin-item {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,0,60,0.03);
+      border: 1px solid rgba(255,0,60,0.1);
+      border-radius: 6px; padding: 16px 18px;
+      transition: border-color 0.2s;
+    }
+    .plugin-item:hover { border-color: rgba(255,0,60,0.35); }
+    .plugin-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0;
+      box-shadow: 0 0 6px var(--red-glow);
+    }
+    .plugin-name { font-family: var(--mono); font-size: 13px; color: var(--text); }
+    .plugin-desc { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+    /* ── INSTALL ── */
+    #install { border-top: 1px solid rgba(255,0,60,0.1); }
+    .terminal-block {
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,0,60,0.2);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 0 40px rgba(255,0,60,0.06);
+    }
+    .terminal-header {
+      background: rgba(255,0,60,0.06);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid rgba(255,0,60,0.1);
+    }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-dot.r { background: #ff5f57; }
+    .terminal-dot.y { background: #ffbd2e; }
+    .terminal-dot.g { background: #28c840; }
+    .terminal-body { padding: 24px 28px; font-family: var(--mono); font-size: 14px; line-height: 2; }
+    .t-comment { color: rgba(255,160,170,0.35); }
+    .t-cmd::before { content: "$ "; color: var(--red); }
+    .t-cmd { color: var(--text); }
+    .t-out { color: rgba(114,234,248,0.7); padding-left: 16px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,0,60,0.1);
+      padding: 40px; text-align: center;
+      font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+    }
+    footer a { color: var(--red); text-decoration: none; }
+    footer a:hover { text-shadow: 0 0 8px var(--red-glow); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── GLITCH ── */
+    @keyframes glitch {
+      0%,100% { clip-path: none; transform: none; }
+      92% { clip-path: polygon(0 20%, 100% 20%, 100% 24%, 0 24%); transform: translate(-2px, 0); }
+      94% { clip-path: polygon(0 60%, 100% 60%, 100% 65%, 0 65%); transform: translate(2px, 0); color: var(--blue); }
+      96% { clip-path: none; transform: none; }
+    }
+    h1:hover { animation: glitch 0.4s steps(1) forwards; }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 20px; }
+      .stats-bar { gap: 32px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">HAXCORD</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#plugins">Plugins</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/TheFallenNightAdmin/haxcord" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">v0.1.0 — Now Available</div>
+    <h1>HAX<span>CORD</span></h1>
+    <p class="hero-sub">A Discord client mod built for people who actually know what they're doing.<span class="cursor-blink"></span></p>
+    <div class="hero-buttons">
+      <a href="#install" class="btn btn-primary">Install Now</a>
+      <a href="https://github.com/TheFallenNightAdmin/haxcord" class="btn btn-secondary" target="_blank">View Source</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Open Source</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Built-in Plugins</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Telemetry</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Customization</div></div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="reveal">
+      <div class="section-tag">What it does</div>
+      <h2>Built Different</h2>
+      <p class="section-desc">HaxCord patches Discord at the Electron level — giving you full control without the overhead.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">ASAR Patching</div>
+        <div class="feature-desc">Injects directly into Discord's Electron app. No browser extension, no wrapper — the real deal.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧩</div>
+        <div class="feature-title">Plugin API</div>
+        <div class="feature-desc">Full before/after/instead hooks into any Discord internal function via the Webpack module system.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <div class="feature-title">Theme Loader</div>
+        <div class="feature-desc">Drop any .css file into the themes folder. Live toggle from settings. No restart required.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Auto-Updater</div>
+        <div class="feature-desc">Checks GitHub releases on startup. One-click updates with toast notifications.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title">Clean Uninstall</div>
+        <div class="feature-desc">Backs up your original app.asar. Run the uninstaller and Discord is back to stock, no trace.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">Settings Panel</div>
+        <div class="feature-desc">Fully integrated into Discord's own settings. Plugins, themes, and about — all in one place.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLUGINS -->
+  <section id="plugins" style="border-top: 1px solid rgba(255,0,60,0.1);">
+    <div class="reveal">
+      <div class="section-tag">Built-in</div>
+      <h2>Ships Ready</h2>
+      <p class="section-desc">HaxCord comes with useful plugins out of the box. Enable what you need, ignore what you don't.</p>
+    </div>
+    <div class="plugin-grid reveal">
+      <div class="plugin-item">
+        <div class="plugin-dot"></div>
+        <div>
+          <div class="plugin-name">CustomCSS</div>
+          <div class="plugin-desc">Live CSS editor — Ctrl+Shift+K</div>
+        </div>
+      </div>
+      <div class="plugin-item">
+        <div class="plugin-dot"></div>
+        <div>
+          <div class="plugin-name">NoTypingIndicators</div>
+          <div class="plugin-desc">Hides "X is typing..."</div>
+        </div>
+      </div>
+      <div class="plugin-item">
+        <div class="plugin-dot"></div>
+        <div>
+          <div class="plugin-name">AlwaysOnTop</div>
+          <div class="plugin-desc">Keeps Discord above all windows</div>
+        </div>
+      </div>
+      <div class="plugin-item">
+        <div class="plugin-dot"></div>
+        <div>
+          <div class="plugin-name">ShowTimezones</div>
+          <div class="plugin-desc">Local time in user profiles</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top: 32px;">
+      <p style="font-family: var(--mono); font-size: 13px; color: var(--text-dim);">
+        // Writing your own? Drop a <span style="color:var(--red);">.js</span> file in the <span style="color:var(--blue);">plugins/</span> folder. That's it.
+      </p>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="reveal">
+      <div class="section-tag">Get started</div>
+      <h2>Install in 3 Commands</h2>
+      <p class="section-desc">Close Discord first. Then run the following in your terminal.</p>
+    </div>
+    <div class="terminal-block reveal">
+      <div class="terminal-header">
+        <div class="terminal-dot r"></div>
+        <div class="terminal-dot y"></div>
+        <div class="terminal-dot g"></div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-comment"># Clone the repo</div>
+        <div class="t-cmd">git clone https://github.com/TheFallenNightAdmin/haxcord</div>
+        <div class="t-out">Cloning into 'haxcord'...</div>
+        <br>
+        <div class="t-comment"># Install dependencies</div>
+        <div class="t-cmd">cd haxcord && npm install</div>
+        <div class="t-out">added 1 package in 0.8s</div>
+        <br>
+        <div class="t-comment"># Inject into Discord</div>
+        <div class="t-cmd">npm run inject</div>
+        <div class="t-out">[HaxCord] Found Discord at: C:\Users\...\AppData\Local\Discord</div>
+        <div class="t-out">[HaxCord] Backed up original app.asar</div>
+        <div class="t-out">[HaxCord] Injected successfully!</div>
+        <div class="t-out">[HaxCord] Restart Discord to finish. ✓</div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top: 20px; font-family: var(--mono); font-size: 12px; color: var(--text-dim);">
+      // To uninstall: <span style="color:var(--red);">npm run uninject</span> — restores original Discord with no trace.
+    </div>
+  </section>
+
+  <footer>
+    <div style="margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--red); text-shadow: 0 0 10px var(--red-glow);">HAXCORD</div>
+    <div>Open source. No telemetry. No ads. Just Discord the way you want it.</div>
+    <div style="margin-top: 12px;">
+      <a href="https://github.com/TheFallenNightAdmin/haxcord">GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/TheFallenNightAdmin/haxcord/issues">Report a Bug</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/TheFallenNightAdmin/haxcord/blob/main/README.md">Docs</a>
+    </div>
+    <div style="margin-top: 16px; opacity: 0.3;">Not affiliated with Discord Inc.</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // Typing effect for hero eyebrow
+    const eyebrow = document.querySelector(".hero-eyebrow");
+    const text = eyebrow.textContent;
+    eyebrow.textContent = "";
+    let i = 0;
+    const type = () => {
+      if (i < text.length) { eyebrow.textContent += text[i++]; setTimeout(type, 40); }
+    };
+    setTimeout(type, 400);
+  </script>
+</body>
+</html>
