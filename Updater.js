@@ -1,16 +1,12 @@
 /**
- * HaxCord Auto-Updater
+ * HaxCord Auto-Updater v2
  * Checks GitHub releases for updates and applies them automatically
  */
 
 const https = require("https");
-const fs = require("fs");
-const path = require("path");
-const { execSync } = require("child_process");
 
 const GITHUB_REPO = "TheFallenNightAdmin/haxcord";
-const CURRENT_VERSION = require("../../package.json").version;
-const HAXCORD_ROOT = path.resolve(__dirname, "../..");
+const CURRENT_VERSION = "0.2.0";
 
 const Updater = {
   async check(silent = false) {
@@ -126,17 +122,11 @@ const Updater = {
   },
 
   async _applyUpdate(release) {
-    console.log("[HaxCord/Updater] Applying update...");
-    try {
-
-      execSync("git pull", { cwd: HAXCORD_ROOT, stdio: "inherit" });
-      execSync("npm install", { cwd: HAXCORD_ROOT, stdio: "inherit" });
-      console.log("[HaxCord/Updater] Update applied! Reload Discord to finish.");
-      this._showToast("✅ Update applied! Press Ctrl+R to reload Discord.");
-    } catch (e) {
-      console.error("[HaxCord/Updater] Auto-update failed:", e.message);
-      this._showToast("❌ Auto-update failed. Please update manually from GitHub.");
-    }
+    // Open the releases page in the user's browser — running git pull / npm install
+    // via execSync blocks Discord's renderer thread and will cause a freeze/crash
+    const { shell } = require("electron");
+    shell.openExternal(release.url);
+    this._showToast("Opening GitHub releases page in your browser...");
   },
 
   _showToast(message) {
