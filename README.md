@@ -3,6 +3,9 @@
 A lightweight Discord client mod built on Electron asar injection. HaxCord adds a plugin system, theme support, live CSS editing, and a built-in settings panel — all without touching Discord's source files.
 
 ---
+# Visit The Website
+https://haxcord.vercel.app
+---
 
 ## Features
 
