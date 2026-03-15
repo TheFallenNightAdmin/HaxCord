@@ -9,7 +9,7 @@ const PluginManager = require("./pluginManager");
 const SettingsUI = require("../ui/settings");
 
 const HaxCord = {
-  version: "0.1.0",
+  version: "0.2.0",
 
   async init() {
     console.log(`[HaxCord] v${this.version} initializing...`);
