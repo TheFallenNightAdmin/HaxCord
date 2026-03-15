@@ -1,11 +1,11 @@
 /**
- * HaxCord Installer v2
- * Finds Discord installation, extracts app.asar, injects HaxCord loader
+ * HaxCord Installer v3
+ * Injects into discord_desktop_core/index.js — the same approach used by BetterDiscord.
+ * This runs after Electron is fully initialized, avoiding the BrowserWindow lock issue.
  */
 
 const fs = require("fs");
 const path = require("path");
-const asar = require("asar");
 const os = require("os");
 
 const DISCORD_PATHS = [
@@ -16,7 +16,7 @@ const DISCORD_PATHS = [
 
 const HAXCORD_ROOT = __dirname;
 
-function findDiscordApp(discordPath) {
+function findDiscordCore(discordPath) {
   if (!fs.existsSync(discordPath)) return null;
 
   const entries = fs.readdirSync(discordPath);
@@ -27,66 +27,63 @@ function findDiscordApp(discordPath) {
 
   if (!appFolder) return null;
 
-  const resourcesPath = path.join(discordPath, appFolder, "resources");
-  const asarPath = path.join(resourcesPath, "app.asar");
+  const modulesPath = path.join(discordPath, appFolder, "modules");
+  if (!fs.existsSync(modulesPath)) return null;
 
-  if (!fs.existsSync(asarPath)) return null;
+  // Find discord_desktop_core-N folder
+  const coreFolder = fs.readdirSync(modulesPath)
+    .filter(e => e.startsWith("discord_desktop_core"))
+    .sort()
+    .reverse()[0];
 
-  return { resourcesPath, asarPath };
+  if (!coreFolder) return null;
+
+  const corePath = path.join(modulesPath, coreFolder, "discord_desktop_core");
+  const indexFile = path.join(corePath, "index.js");
+
+  if (!fs.existsSync(indexFile)) return null;
+
+  return { corePath, indexFile };
 }
 
-function installHaxCord(resourcesPath, asarPath) {
-  console.log(`[HaxCord] Found Discord at: ${resourcesPath}`);
+function installHaxCord(indexFile) {
+  console.log(`[HaxCord] Found discord_desktop_core at: ${indexFile}`);
 
-  const extractPath = path.join(resourcesPath, "app");
-  if (!fs.existsSync(extractPath)) {
-    console.log("[HaxCord] Extracting app.asar...");
-    asar.extractAll(asarPath, extractPath);
-  } else {
-    console.log("[HaxCord] app folder already exists, skipping extraction.");
-  }
-
-  const backupPath = path.join(resourcesPath, "app.asar.bak");
-  if (!fs.existsSync(backupPath)) {
-    fs.copyFileSync(asarPath, backupPath);
-    console.log("[HaxCord] Backed up original app.asar");
-  }
-
-  const packageJson = JSON.parse(
-    fs.readFileSync(path.join(extractPath, "package.json"), "utf8")
-  );
-  const entryFile = path.join(extractPath, packageJson.main);
-
-  let entryContent = fs.readFileSync(entryFile, "utf8");
+  let content = fs.readFileSync(indexFile, "utf8");
 
   const injectionMarker = "// [HaxCord Injected]";
-  if (entryContent.includes(injectionMarker)) {
+  if (content.includes(injectionMarker)) {
     console.log("[HaxCord] Already injected, skipping.");
     return;
   }
 
-  const injection = `
-${injectionMarker}
+  // Back up original
+  const backupFile = indexFile + ".bak";
+  if (!fs.existsSync(backupFile)) {
+    fs.copyFileSync(indexFile, backupFile);
+    console.log("[HaxCord] Backed up original index.js");
+  }
+
+  const loaderPath = path.join(HAXCORD_ROOT, "core", "loader.js").replace(/\\/g, "\\\\");
+
+  const injection = `${injectionMarker}
 try {
-  require(${JSON.stringify(path.join(HAXCORD_ROOT, "core", "loader.js"))});
+  require("${loaderPath}");
 } catch(e) {
   console.error("[HaxCord] Failed to load:", e);
 }
 `;
 
-  fs.writeFileSync(entryFile, injection + entryContent, "utf8");
-  console.log(`[HaxCord] Injected into ${entryFile}`);
-
-  fs.unlinkSync(asarPath);
-  console.log("[HaxCord] Removed app.asar (Discord will load extracted app folder)");
+  fs.writeFileSync(indexFile, injection + content, "utf8");
+  console.log(`[HaxCord] Injected into ${indexFile}`);
   console.log("[HaxCord] Installation complete! Restart Discord.");
 }
 
 let installed = false;
 for (const discordPath of DISCORD_PATHS) {
-  const result = findDiscordApp(discordPath);
+  const result = findDiscordCore(discordPath);
   if (result) {
-    installHaxCord(result.resourcesPath, result.asarPath);
+    installHaxCord(result.indexFile);
     installed = true;
     break;
   }
