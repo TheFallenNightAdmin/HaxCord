@@ -1,0 +1,147 @@
+/**
+ * @name Hax
+ * @author Pagoni Hax
+ * @description Hax is a dark, hacker-aesthetic Discord theme with a deep red and black color scheme. It transforms Discord to look like a retro terminal or hacking interfac
+ * @version 14.0.0
+ * @authorLink https://github.com/TheFallenNightAdmin
+ * @website https://github.com/TheFallenNightAdmin/DiscordThemeSwticher
+ * @source https://raw.githubusercontent.com/TheFallenNightAdmin/DiscordThemeSwticher/refs/heads/main/Hax.theme.css
+ * @updateUrl https://raw.githubusercontent.com/TheFallenNightAdmin/DiscordThemeSwticher/refs/heads/main/Hax.theme.css
+ */
+:root,
+.visual-refresh,
+.visual-refresh.theme-dark {
+  --hax-bg-gradient: linear-gradient(180deg, rgba(23,0,5,.85) 6%, rgba(0,0,0,1) 75%);
+  --hax-red: 255,0,60;
+  --hax-blue: 114,234,248;
+
+  --bg-r: 5,3,7;
+  --text-r: 255,160,170;
+
+  --scan-opacity: 0.06;
+  --glow-opacity: 0.18;
+  --crt-shift: 1.6px;
+
+  --custom-title-text: "Hax";
+  --custom-title-font-size: 16px;
+  --custom-title-font-weight: bold;
+}
+
+.theme-dark body {
+  background: var(--hax-bg-gradient) !important;
+  color: rgb(var(--text-r)) !important;
+  font-family: 'Rajdhani', "Share Tech Mono", monospace !important;
+}
+
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(60% 60% at 50% 45%, rgba(255,0,60,0.02) 0%, rgba(0,0,0,0.55) 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.0) 25%),
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255,0,60,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+  background-size: auto, auto, 100% 2px, 3px 100%;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0) 0px,
+      rgba(0,0,0,var(--scan-opacity)) 1px,
+      rgba(0,0,0,0) 2px
+    );
+  mix-blend-mode: multiply;
+  animation: hax-scan 10s linear infinite;
+}
+@keyframes hax-scan { 0% { background-position: 0 0; } 100% { background-position: 0 9999px; } }
+
+.title_c38106::before,
+.title_f75fb0::before {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  z-index: 9999;
+  color: rgb(var(--hax-red));
+  content: var(--custom-title-text);
+  font-size: var(--custom-title-font-size);
+  font-weight: var(--custom-title-font-weight);
+  display: block;
+  text-shadow: 0 0 6px rgba(255,0,60,0.95), 0 0 20px rgba(255,0,60,0.35);
+  pointer-events: none;
+}
+
+[class*="terminal"], [class*="Terminal"], .robo-header, .robo-title, .fallout-terminal, .terminal-window, .theme-terminal {
+  background: rgba(var(--bg-r), 0.95) !important;
+  color: rgb(var(--text-r)) !important;
+  border-radius: 6px;
+  border: 1px solid rgba(114,234,248,0.06);
+  box-shadow:
+    0 0 28px rgba(255,0,60,var(--glow-opacity)),
+    inset 0 0 30px rgba(255,0,60,calc(var(--glow-opacity) * 0.6));
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-dark .markup__75297,
+.theme-dark .messageContent-2qWWxC,
+.theme-dark .title_f75fb0,
+.theme-dark .header_f37cb1,
+.theme-dark .username_c19a55,
+.theme-dark .username {
+  color: rgb(var(--text-r)) !important;
+  text-shadow:
+    0 0 6px rgba(255,0,60,0.45),
+    0 0 14px rgba(255,0,60,0.12),
+    0 0 28px rgba(114,234,248,0.06);
+}
+
+.theme-dark .lookFilled__201d5:not(.shinyButton__6a443),
+.theme-dark .numberBadge__2b1f5,
+.theme-dark .mention,
+.theme-dark .channelMention {
+  background: transparent !important;
+  border: 1px solid rgba(255,0,60,0.9) !important;
+  color: rgb(255,0,60) !important;
+  text-shadow: 0 0 8px rgba(255,0,60,0.6);
+}
+
+.terminal .cursor, .terminal-caret, .messageContent-2qWWxC .cursor {
+  background: linear-gradient(90deg, rgba(255,0,60,1), rgba(114,234,248,0.95));
+  box-shadow: 0 0 12px rgba(255,0,60, .6);
+  width: 10px; height: 18px; border-radius: 2px;
+}
+::selection {
+  background: rgba(255,0,60, 0.18);
+  color: white;
+}
+
+@keyframes hax-flicker {
+  0% { opacity: 1; }
+  6% { opacity: 0.97; }
+  8% { opacity: 0.92; }
+  10% { opacity: 0.99; }
+  100% { opacity: 0.995; }
+}
+[class*="terminal"], .robo-header, .robo-title, .fallout-terminal {
+  animation: hax-flicker 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after, [class*="terminal"] { animation: none !important; }
+}
+
+@media (max-width: 800px) {
+  .title_c38106::before { font-size: 13px; left: 8px; top: 6px; }
+  .theme-dark .messageContent-2qWWxC { font-size: 12px; }
+}

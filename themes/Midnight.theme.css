@@ -1,0 +1,41 @@
+/**
+ * @name Midnight
+ * @author Pagoni Hax
+ * @version 1.0.0
+ * @description A deep dark theme with blue accents
+ */
+
+:root {
+  --background-primary: #0d0d0d;
+  --background-secondary: #111111;
+  --background-secondary-alt: #161616;
+  --background-tertiary: #0a0a0a;
+  --background-floating: #1a1a1a;
+
+  --brand-experiment: #5865f2;
+  --brand-experiment-300: #7289da;
+
+  --header-primary: #f0f0f0;
+  --header-secondary: #b0b0b0;
+  --text-normal: #dcddde;
+  --text-muted: #72767d;
+  --interactive-normal: #b9bbbe;
+  --interactive-hover: #dcddde;
+
+  --channeltextarea-background: #181818;
+  --background-modifier-hover: rgba(255,255,255,0.04);
+  --background-modifier-accent: rgba(255,255,255,0.08);
+}
+
+[class*="channelTextArea"] {
+  border-radius: 12px !important;
+}
+
+[class*="selected"] [class*="channel"] {
+  box-shadow: inset 2px 0 0 var(--brand-experiment);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--background-modifier-accent); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-experiment); }

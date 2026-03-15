@@ -1,0 +1,218 @@
+/**
+ * @name Luna
+ * @author Pagoni Hax
+ * @description it's a moody, neon-lit theme with a purple/red/blue color trio giving it a dreamy but edgy feel.
+ * @version 17.0.1
+*/
+
+:root,
+.visual-refresh,
+.visual-refresh.theme-dark {
+  --luna-bg: #0a0a12;
+  --luna-bg2: #141427;
+  --luna-sec: #6a0dad;
+  --luna-links: #4da6ff;
+  --glow-purple: 106, 13, 173;
+
+  --rgb-highlight: 255, 0, 0;
+  --highlight: rgb(var(--rgb-highlight));
+
+  --rgb-background: 20, 0, 0;
+  --background: rgb(var(--rgb-background));
+  --text: rgb(255, 255, 255);
+
+  --transition-time: 0.3s;
+
+  --show-custom-title: 1;
+  --custom-title-text: "Luna Marie";
+  --custom-title-font-size: 16px;
+  --custom-title-font-weight: bold;
+
+  --luna-home-icon: url(https://i.imgur.com/RvlNQ7k.png);
+}
+
+html, body {
+  font-family: Arial, sans-serif;
+}
+
+.theme-dark body {
+  background-color: var(--luna-bg) !important;
+}
+
+.appMount__51fd7,
+.app__160d8,
+.bg__960e4 {
+  background-color: var(--luna-bg) !important;
+  box-shadow: inset 0 0 80px rgba(var(--glow-purple), 0.4),
+              0 0 40px rgba(var(--glow-purple), 0.25);
+}
+
+.theme-dark .appMount__51fd7,
+.theme-dark .app__160d8,
+.theme-dark .bg__960e4,
+.theme-dark .guilds_c48ade,
+.theme-dark .scroller_ef3116,
+.theme-dark .sidebar_c48ade,
+.theme-dark .sidebar_c48ade::after,
+.theme-dark .container__2637a,
+.theme-dark .chat_f75fb0,
+.theme-dark .chatContent_f75fb0,
+.theme-dark .title_f75fb0,
+.theme-dark .searchBar__97492,
+.theme-dark .container_c8ffbb,
+.theme-dark .members_c8ffbb,
+.theme-dark .content_f75fb0,
+.theme-dark .container__91a9d,
+.theme-dark .channelTextArea__74017,
+.theme-dark .container__133bf,
+.theme-dark .section__00943,
+.theme-dark .nowPlayingColumn__133bf,
+.theme-dark .container__7d20c,
+.theme-dark .itemCard__7e549,
+.theme-dark .inset_bf1984,
+.theme-dark .container__9293f,
+.theme-dark .privateChannels__35e86,
+.theme-dark .scroller__99e7c,
+.theme-dark .layer__960e4,
+.theme-dark .standardSidebarView__23e6b,
+.theme-dark .sidebarRegionScroller__23e6b,
+.theme-dark .contentRegion__23e6b,
+.theme-dark .contentRegionScroller__23e6b,
+.theme-dark .container__4a84a,
+.theme-dark .stickyHeader_adb41f,
+.theme-dark .scroller_fb04e,
+.theme-dark .pageWrapper_a3a4ce,
+.theme-dark .footer__214dc,
+.theme-dark .container_f369db {
+  background: rgba(0, 0, 0, 0) !important;
+}
+
+.theme-dark .sidebar_c48ade,
+.theme-dark .container__2637a,
+.theme-dark .chat_f75fb0,
+.theme-dark .content_f75fb0,
+.theme-dark .members_c8ffbb,
+.theme-dark .container_c8ffbb {
+  background-color: var(--luna-bg2) !important;
+  box-shadow: inset 0 0 60px rgba(var(--glow-purple), 0.2);
+}
+
+.theme-dark .mention,
+.theme-dark .channelMention {
+  background-color: var(--luna-sec) !important;
+  color: #fff !important;
+  text-shadow: 0 0 6px rgba(var(--glow-purple), 0.95),
+               0 0 20px rgba(var(--glow-purple), 0.35);
+}
+
+.theme-dark .numberBadge__2b1f5 {
+  background-color: var(--luna-sec) !important;
+  color: white !important;
+  text-shadow: 0 0 6px rgba(var(--glow-purple), 0.95),
+               0 0 18px rgba(var(--glow-purple), 0.35);
+}
+
+.theme-dark .channelMention .name_b52c3f {
+  background-color: rgba(106, 13, 173, 0.3) !important;
+  color: var(--luna-sec) !important;
+}
+
+.theme-dark .lookFilled__201d5:not(.shinyButton__6a443) {
+  background-color: var(--luna-sec) !important;
+  box-shadow: 0 0 12px rgba(var(--glow-purple), 0.6);
+}
+
+.theme-dark a,
+.theme-dark .markup__75297 a,
+.theme-dark .username {
+  color: var(--luna-links) !important;
+  text-shadow: 0 0 6px rgba(77, 166, 255, 0.95),
+               0 0 20px rgba(77, 166, 255, 0.35);
+}
+
+.theme-dark span,
+.theme-dark p,
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3 {
+  color: var(--highlight) !important;
+  text-shadow: 0 0 6px rgba(var(--rgb-highlight), 0.95),
+               0 0 20px rgba(var(--rgb-highlight), 0.35);
+}
+
+.theme-dark .channelTextArea__74017,
+.theme-dark .searchBar__97492 {
+  background-color: var(--luna-bg2) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 25px rgba(var(--glow-purple), 0.3);
+}
+
+.theme-dark .layer__960e4,
+.theme-dark .standardSidebarView__23e6b,
+.theme-dark .contentRegion__23e6b,
+.theme-dark .footer__214dc {
+  background-color: var(--luna-bg) !important;
+  box-shadow: 0 0 50px rgba(var(--glow-purple), 0.25);
+}
+
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+::-webkit-scrollbar-track {
+  background: var(--luna-bg2) !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--luna-links) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 8px rgba(77, 166, 255, 0.7);
+}
+
+.theme-dark .members_c8ffbb,
+.theme-dark .member_c8ffbb,
+.theme-dark .memberInner__55c99 {
+  background-color: var(--luna-bg2) !important;
+  color: var(--highlight) !important;
+  text-shadow: 0 0 4px rgba(var(--rgb-highlight), 0.8);
+}
+
+.theme-dark .member_c8ffbb:hover {
+  background-color: var(--luna-sec) !important;
+  color: var(--highlight) !important;
+  text-shadow: 0 0 8px rgba(var(--rgb-highlight), 1),
+               0 0 24px rgba(var(--rgb-highlight), 0.45);
+}
+
+.theme-dark .members_c8ffbb .member_c8ffbb .username {
+  color: var(--luna-links) !important;
+  text-shadow: 0 0 6px rgba(77, 166, 255, 0.95),
+               0 0 20px rgba(77, 166, 255, 0.35);
+}
+
+.title_c38106::before {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  z-index: 9999;
+  color: var(--luna-sec);
+  content: "Luna";
+  font-size: calc(var(--custom-title-font-size) * var(--show-custom-title));
+  font-weight: var(--custom-title-font-weight);
+  display: block;
+  text-shadow: 0 0 6px rgba(var(--glow-purple), 0.95),
+               0 0 18px rgba(var(--glow-purple), 0.35);
+}
+
+.title_c38106::after {
+  position: fixed;
+  left: 52px;
+  top: 10px;
+  z-index: 9999;
+  color: var(--highlight);
+  content: " Marie";
+  font-size: calc(var(--custom-title-font-size) * var(--show-custom-title));
+  font-weight: var(--custom-title-font-weight);
+  display: block;
+  text-shadow: 0 0 6px rgba(var(--rgb-highlight), 0.95),
+               0 0 18px rgba(var(--rgb-highlight), 0.22);
+}

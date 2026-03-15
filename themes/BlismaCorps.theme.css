@@ -1,0 +1,230 @@
+/**
+ * @name         BlismaCorps
+ * @author       Pagoni Hax
+ * @description  A magical fantasy theme for Blisma Corps with background image support.
+ * @version      1.2.0
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;500;600&family=Fira+Code&display=swap');
+
+:root {
+  --bc-background: url("https://i.imgur.com/KjO9m18.png");
+  --bc-bg:         #00090f;
+  --bc-gold:       #f0b429;
+  --bc-gold-glow:  255, 180, 40;
+  --bc-gold2:      #ffdc6e;
+  --bc-blue:       #3b9eff;
+  --bc-purple:     #8b5cf6;
+  --bc-green:      #4ade80;
+  --bc-text:       #c8d0e8;
+  --bc-muted:      #7a82a0;
+  --bc-border:     rgba(240, 180, 41, 0.22);
+}
+
+.appMount__51fd7,
+.app__160d8,
+.bg__960e4 {
+  background-color: var(--bc-bg) !important;
+  background-image: var(--bc-background) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+#app-mount,
+[class*="chat"],
+[class*="content"],
+[class*="messages"],
+[class*="scroller"],
+[class*="scrollerInner"],
+[class*="scrollerContent"],
+[class*="messagesWrapper"],
+[class*="chatContent"],
+[class*="uploadArea"],
+[class*="outer"],
+[class*="base"],
+[class*="layers"],
+[class*="layer"] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.theme-dark .sidebar_c48ade,
+.theme-dark .container__2637a,
+.theme-dark .members_c8ffbb,
+.theme-dark .container_c8ffbb,
+[class*="sidebar"],
+[class*="guilds"],
+[class*="members"],
+[class*="panels"] {
+  background-color: transparent !important;
+}
+
+.theme-dark .standardSidebarView__23e6b,
+.theme-dark .contentRegion__23e6b,
+.theme-dark .layer__960e4,
+.theme-dark .footer__214dc {
+  background-color: transparent !important;
+}
+
+.theme-dark .channelTextArea__74017,
+.theme-dark .searchBar__97492,
+[class*="channelTextArea"],
+[class*="searchBar"] {
+  background-color: rgba(0, 9, 15, 0.72) !important;
+  border: 1px solid var(--bc-border) !important;
+  border-radius: 10px !important;
+  box-shadow: inset 0 0 20px rgba(var(--bc-gold-glow), 0.08) !important;
+}
+
+[class*="channelTextArea"]:focus-within,
+[class*="searchBar"]:focus-within {
+  border-color: var(--bc-gold) !important;
+  box-shadow: 0 0 0 2px rgba(var(--bc-gold-glow), 0.2),
+              inset 0 0 20px rgba(var(--bc-gold-glow), 0.1) !important;
+}
+
+.theme-dark .username,
+.theme-dark .username_c19a55,
+.theme-dark .name__2ea32,
+.theme-dark .name__29444,
+[class*="username"],
+[class*="headerText"] {
+  color: var(--bc-gold) !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 600 !important;
+  text-shadow:
+    0 0 6px rgba(var(--bc-gold-glow), 0.9),
+    0 0 18px rgba(var(--bc-gold-glow), 0.4) !important;
+}
+
+.theme-dark span,
+.theme-dark p,
+[class*="markup"],
+[class*="messageContent"] {
+  color: var(--bc-text) !important;
+}
+
+.theme-dark a,
+[class*="anchor"] {
+  color: var(--bc-blue) !important;
+}
+
+.theme-dark a:hover,
+[class*="anchor"]:hover {
+  color: var(--bc-gold) !important;
+}
+
+.theme-dark .numberBadge__2b1f5,
+.theme-dark .mention,
+.theme-dark .channelMention,
+[class*="numberBadge"],
+[class*="mention"] {
+  background: linear-gradient(135deg, #c9920e, var(--bc-gold)) !important;
+  color: #1a1000 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+[class*="message"]:hover,
+[class*="cozyMessage"]:hover {
+  background: rgba(var(--bc-gold-glow), 0.04) !important;
+  border-left: 2px solid rgba(var(--bc-gold-glow), 0.3) !important;
+}
+
+[class*="containerDefault"]:hover,
+[class*="containerDefault"][class*="modeSelected"] {
+  background: rgba(var(--bc-gold-glow), 0.1) !important;
+  border-radius: 6px !important;
+}
+
+[class*="containerDefault"][class*="modeSelected"] [class*="name"] {
+  color: var(--bc-gold2) !important;
+}
+
+[class*="categoryContainer"] [class*="name"],
+[class*="membersGroup"] {
+  color: var(--bc-gold) !important;
+  font-family: 'Cinzel', serif !important;
+  font-size: 11px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+[class*="reaction"] {
+  background: rgba(0, 9, 15, 0.6) !important;
+  border: 1px solid var(--bc-border) !important;
+  border-radius: 20px !important;
+}
+
+[class*="reaction"]:hover {
+  background: rgba(var(--bc-gold-glow), 0.15) !important;
+  border-color: var(--bc-gold) !important;
+}
+
+[class*="reactionMe"] {
+  background: rgba(var(--bc-gold-glow), 0.2) !important;
+  border-color: var(--bc-gold) !important;
+}
+
+[class*="embed"] {
+  background: rgba(0, 9, 15, 0.65) !important;
+  border-left: 3px solid var(--bc-gold) !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+[class*="popout"],
+[class*="menu"],
+[class*="tooltip"] {
+  background: rgba(5, 12, 25, 0.97) !important;
+  border: 1px solid var(--bc-border) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7),
+              0 0 0 1px rgba(var(--bc-gold-glow), 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+[class*="button"][class*="lookFilled"][class*="colorBrand"],
+[class*="button"][class*="lookFilled"][class*="colorGreen"] {
+  background: linear-gradient(135deg, #c9920e, var(--bc-gold)) !important;
+  color: #1a1000 !important;
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(var(--bc-gold-glow), 0.35) !important;
+}
+
+[class*="button"][class*="lookFilled"][class*="colorBrand"]:hover,
+[class*="button"][class*="lookFilled"][class*="colorGreen"]:hover {
+  background: linear-gradient(135deg, var(--bc-gold), var(--bc-gold2)) !important;
+  box-shadow: 0 4px 20px rgba(var(--bc-gold-glow), 0.55) !important;
+  transform: translateY(-1px) !important;
+}
+
+[class*="statusOnline"]  { background-color: var(--bc-green)  !important; }
+[class*="statusIdle"]    { background-color: var(--bc-gold)   !important; }
+[class*="statusDnd"]     { background-color: #f87171          !important; }
+[class*="statusOffline"] { background-color: #4a5070          !important; }
+
+[class*="speaking"] [class*="avatar"] {
+  box-shadow: 0 0 0 2px var(--bc-green) !important;
+}
+
+::-webkit-scrollbar       { width: 4px !important; height: 4px !important; }
+::-webkit-scrollbar-track { background: transparent !important; }
+::-webkit-scrollbar-thumb { background: rgba(var(--bc-gold-glow), 0.4) !important; border-radius: 4px !important; }
+::-webkit-scrollbar-thumb:hover { background: rgba(var(--bc-gold-glow), 0.7) !important; }
+
+::selection {
+  background: rgba(var(--bc-gold-glow), 0.3) !important;
+  color: #fff !important;
+}
+
+code, pre {
+  background: rgba(0, 9, 15, 0.9) !important;
+  border: 1px solid var(--bc-border) !important;
+  color: var(--bc-green) !important;
+  font-family: 'Fira Code', monospace !important;
+  border-radius: 4px !important;
+}
