@@ -14,6 +14,13 @@ global.HaxCord = {
     version: "0.2.0"
 };
 
+// Check if Discord has updated and re-inject if needed
+try {
+    require(path.join(__dirname, "..", "DiscordUpdater.js")).checkAndUpdate();
+} catch (e) {
+    console.error("[HaxCord] DiscordUpdater failed:", e);
+}
+
 // loader.js runs in Discord's main process — require the injector
 // which patches BrowserWindow to inject our preload into the renderer
 try {
