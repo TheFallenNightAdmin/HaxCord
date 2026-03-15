@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * HaxCord Renderer
+ * HaxCord Renderer v2
  * Runs inside Discord's renderer process after DOM is ready
  * Waits for Discord's webpack to be available before initializing
  */
