@@ -1,11 +1,24 @@
 /**
- * HaxCord Patcher
+ * HaxCord Patcher v2
  * Safely patches functions with before/after/instead hooks.
  * All patches are tracked and can be removed cleanly.
  */
 
 let _patchId = 0;
+let _objId = 0;
 const _patches = new Map();
+
+function getObjId(obj) {
+  if (!obj.__haxcordId) {
+    Object.defineProperty(obj, "__haxcordId", {
+      value: ++_objId,
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    });
+  }
+  return obj.__haxcordId;
+}
 
 const Patcher = {
   init() {
@@ -28,7 +41,7 @@ const Patcher = {
 
   _addHook(type, caller, module, method, callback) {
     const id = ++_patchId;
-    const key = `${module}.${method}`;
+    const key = `${getObjId(module)}.${method}`;
 
     if (!_patches.has(key)) {
       const original = module[method];
