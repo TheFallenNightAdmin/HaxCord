@@ -3,9 +3,9 @@
  * Initializes all subsystems
  */
 
-const Webpack = require("./webpack");
-const Patcher = require("./patcher");
-const PluginManager = require("./pluginManager");
+const Webpack = require("./Webpack");
+const Patcher = require("./Patcher");
+const PluginManager = require("./PluginManager");
 const SettingsUI = require("../ui/settings");
 
 const HaxCord = {
