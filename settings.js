@@ -1,13 +1,12 @@
 /**
- * HaxCord Settings UI - v2
+ * HaxCord Settings UI - v3
  * Full settings panel with tabs: Plugins, Themes, About
  */
 
-const Webpack = require("../core/webpack");
-const Patcher = require("../core/patcher");
-const PluginManager = require("../core/pluginManager");
-const ThemeLoader = require("../core/themeLoader");
-const PluginStore = require("../core/pluginStore");
+const Webpack = require("../core/Webpack");
+const Patcher = require("../core/Patcher");
+const PluginManager = require("../core/PluginManager");
+const ThemeLoader = require("../Themeloader");
 
 const STYLE_ID = "haxcord-settings-style";
 
@@ -175,7 +174,7 @@ const SettingsUI = {
       <div class="hx-tabs">
         ${["plugins", "themes", "about"].map((t) => `
           <div class="hx-tab ${t === activeTab ? "active" : ""}" data-tab="${t}">
-            ${{ plugins: "🧩 Plugins", store: "🛒 Store", themes: "🎨 Themes", about: "ℹ️ About" }[t]}
+            ${{ plugins: "🧩 Plugins", themes: "🎨 Themes", about: "ℹ️ About" }[t]}
           </div>
         `).join("")}
       </div>
@@ -183,7 +182,6 @@ const SettingsUI = {
 
     let content = "";
     if (activeTab === "plugins") content = this._buildPlugins();
-    else if (activeTab === "store") content = "<div id='hxs-store-mount'></div>";
     else if (activeTab === "themes") content = this._buildThemes();
     else content = this._buildAbout();
 
@@ -231,7 +229,7 @@ const SettingsUI = {
   },
 
   _buildAbout() {
-    const { version } = require("../../package.json");
+    const version = "0.2.0";
     const plugins = PluginManager.getAll();
     const themes = ThemeLoader.getAll();
     return `
@@ -265,14 +263,8 @@ const SettingsUI = {
         else ThemeLoader.disable(e.target.dataset.theme);
       });
     });
-    // Mount plugin store
-    const storMount = panel.querySelector("#hxs-store-mount");
-    if (storMount) {
-      PluginStore.init().then(() => PluginStore.renderPanel(storMount));
-    }
-
     panel.querySelector("#hx-check-updates")?.addEventListener("click", () => {
-      require("../core/updater").check(false);
+      require("../Updater").check(false);
     });
     panel.querySelector("#hx-reload-discord")?.addEventListener("click", () => {
       window.location.reload();
