@@ -1,12 +1,17 @@
 /**
- * HaxCord Theme Loader
+ * HaxCord Theme Loader v2
  * Loads .css and .theme.css files from the themes/ directory
  */
 
 const fs = require("fs");
 const path = require("path");
 
-const THEMES_DIR = path.join(__dirname, "../../themes");
+const appData = process.env.APPDATA
+  || (process.platform === "darwin"
+    ? path.join(process.env.HOME, "Library/Application Support")
+    : path.join(process.env.HOME, ".config"));
+
+const THEMES_DIR = path.join(appData, "HaxCord", "themes");
 
 const ThemeLoader = {
   _injectedStyles: new Map(),
