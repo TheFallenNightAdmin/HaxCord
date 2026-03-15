@@ -1,5 +1,5 @@
 /**
- * HaxCord Installer
+ * HaxCord Installer v2
  * Finds Discord installation, extracts app.asar, injects HaxCord loader
  */
 
@@ -14,7 +14,7 @@ const DISCORD_PATHS = [
   path.join(os.homedir(), "AppData", "Local", "DiscordPTB"),
 ];
 
-const HAXCORD_ROOT = path.resolve(__dirname, "..");
+const HAXCORD_ROOT = __dirname;
 
 function findDiscordApp(discordPath) {
   if (!fs.existsSync(discordPath)) return null;
