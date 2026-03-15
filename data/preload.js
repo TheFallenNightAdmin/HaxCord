@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * HaxCord Preload
+ * HaxCord Preload v2
  * Runs in Discord's renderer process with Node.js access.
  * 1. Chains Discord's original preload (passed via --haxcord-original-preload)
  * 2. Loads renderer.js once the DOM is ready
