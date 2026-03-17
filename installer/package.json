@@ -3,7 +3,7 @@
   "productName": "HaxCord Installer",
   "description": "A simple standalone program which automates the installation, removal and maintenance of HaxCord.",
   "author": "TheFallenNightAdmin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
